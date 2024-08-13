@@ -2,14 +2,16 @@
     --primary-color: #050038;
     --secondary-color: #ff6575;
     --grey: #e6e6e6;
+    --white: #fff;
 }
 
 body {
     font-family: 'Noto Sans', sans-serif;
-    color: #050038;
-    background-color: #fff;
+    color: var(--primary-color);
+    background-color: var(--white);
     line-height: 1.6;
 }
+
 
 /* --------------------------- Header --------------------------- */
 header {
@@ -18,7 +20,7 @@ header {
     align-items: center;
     background-color: var(--primary-color);
     padding: 20px;
-    color: #fff;
+    color: var(--white);
 }
 
 .logo {
@@ -38,9 +40,10 @@ header {
 }
 
 .navbar a {
-    color: #fff;
+    color: var(--white);
     text-decoration: none;
     margin-left: 20px;
+    transition: all ease 350ms;
 }
 
 .navbar a:nth-child(3) {
@@ -48,11 +51,18 @@ header {
     margin-left: 36px;
     padding: 8px 16px;
     border-radius: 10px;
+    transition: all ease 450ms;
 }
 
 .navbar a:hover {
-    text-decoration: underline;
+    color: var(--secondary-color);
 }
+
+.navbar a:nth-child(3):hover {
+    color: var(--white);
+    font-size: 105%;
+}
+
 
 /* ------------------------ Hero Section ------------------------ */
 .hero {
@@ -61,7 +71,7 @@ header {
     align-items: center;
     padding: 50px;
     background-color: var(--primary-color);
-    color: #FFF;
+    color: var(--white);
     border-bottom-left-radius: 50px;
     border-bottom-right-radius: 50px;
 }
@@ -96,7 +106,14 @@ header {
     background-color: var(--grey);
     padding: 10px 20px;
     border-radius: 10px;
-    color: #050038;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all ease 350ms;
+}
+
+.features__feature:hover {
+    font-size: 105%;
+    margin-bottom: -1%;
 }
 
 .hero__video {
@@ -124,22 +141,24 @@ header {
 .video__placeholder p {
     margin-bottom: 20px;
     padding: 25px 0 0 25px;
-    color: #050038;
+    color: var(--primary-color);
 }
 
 .video-controls button {
-    background-color: #fff;
+    background-color: var(--white);
     border: none;
     padding: 10px;
     margin: 0 5px;
     border-radius: 50%;
-    color: #FF6575;
+    color: var(--secondary-color);
     cursor: pointer;
+    transition: all ease 500ms;
 }
 
 .video-controls button:hover {
-    background-color: var(--grey);
+    background-color: var(--primary-color);
 }
+
 
 /* ---------------------- Content Section ---------------------- */
 .content {
@@ -157,6 +176,7 @@ header {
     margin: 0 auto;
     color: var(--primary-color);
 }
+
 
 /* --------------------------- Footer --------------------------- */
 .footer {
