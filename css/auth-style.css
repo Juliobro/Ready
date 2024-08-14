@@ -26,6 +26,7 @@ body {
 
 /* ------------------------ Card styling ------------------------ */
 .auth-container__card {
+    position: relative;
     background-color: var(--white);
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
@@ -52,6 +53,13 @@ body {
     font-weight: 600;
     font-size: 36px;
     color: var(--secondary-color);
+}
+
+.header__back-arrow {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    width: 32px;
 }
 
 
