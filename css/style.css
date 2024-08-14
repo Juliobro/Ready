@@ -27,6 +27,7 @@ header {
     position: absolute;
     top: 15px;
     left: 30px;
+    user-select: none;
 }
 
 .logo img {
@@ -43,6 +44,7 @@ header {
     color: var(--white);
     text-decoration: none;
     margin-left: 20px;
+    user-select: none;
     transition: all ease 350ms;
 }
 
@@ -126,6 +128,7 @@ header {
     right: 100px;
     height: 340px;
     width: 450px;
+    user-select: none;
 }
 
 .video__placeholder {

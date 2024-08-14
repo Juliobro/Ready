@@ -9,10 +9,7 @@ body {
     font-family: 'Noto Sans', sans-serif;
     background-color: var(--grey);
     display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
-    margin: 0;
 }
 
 .auth-container {
@@ -20,7 +17,6 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    padding: 20px;
 }
 
 
@@ -41,17 +37,17 @@ body {
 }
 
 .card__header h1 {
-    display: inline;
     font-family: 'Quicksand', sans-serif;
     font-size: 28px;
     font-weight: 700;
     color: var(--primary-color);
+    user-select: none;
 }
 
 .card__header h1 span {
     font-family: 'Fredoka', sans-serif;
-    font-weight: 600;
     font-size: 36px;
+    font-weight: 600;
     color: var(--secondary-color);
 }
 
@@ -60,6 +56,7 @@ body {
     left: 16px;
     top: 16px;
     width: 32px;
+    user-select: none;
 }
 
 
@@ -81,9 +78,10 @@ label {
     color: var(--primary-color);
     font-weight: 600;
     cursor: pointer;
+    user-select: none;
 }
 
-input[type="email"], input[type="password"] {
+input[type="email"], input[type="password"], input[type="text"] {
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid var(--grey);
@@ -102,6 +100,7 @@ input[type="email"], input[type="password"] {
     margin-bottom: 20px;
     font-size: 16px;
     font-weight: bold;
+    user-select: none;
     transition: all ease 250ms;
 }
 
@@ -126,5 +125,35 @@ input[type="email"], input[type="password"] {
 }
 
 .card__links a:hover {
+    text-decoration: underline;
+}
+
+
+/* ---------------------- Estilos específicos para el Sign up ---------------------- */
+body.signup {
+    height: 120vh;
+}
+
+.card__form.signup .card__privacy {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card__form.signup .card__privacy input[type="checkbox"] {
+    margin: 0 8px 5px 0;
+}
+
+.card__form.signup .card__privacy label {
+    font-size: 14px;
+    color: var(--primary-color);
+}
+
+.card__form.signup .card__privacy a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+.card__form.signup .card__privacy a:hover {
     text-decoration: underline;
 }
