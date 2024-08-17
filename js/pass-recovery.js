@@ -19,6 +19,7 @@ setTimeout(() => {
 
         let casillaCorreo = document.createElement("input");
         casillaCorreo.setAttribute("type", "email");
+        casillaCorreo.setAttribute("name", "email");
         let botonEnviar = document.createElement("input");
         botonEnviar.setAttribute("type", "submit");
 

@@ -1,7 +1,7 @@
 const loginForm = document.getElementById('login-form');
 
 loginForm.addEventListener('submit', (e) => {
-    e.preventDefault(); //Con esto se evita el comportamiento default del form
+    e.preventDefault(); //Con esto se evita el comportamiento default del form (sobretodo que no se recargue la página)
 
     const email = document.getElementById('email').value.toLowerCase(); //Se convierte a minúsculas para comparación
     const password = document.getElementById('password').value;

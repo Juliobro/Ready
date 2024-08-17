@@ -1,7 +1,7 @@
 const signupForm = document.getElementById('signup-form');
 
 signupForm.addEventListener('submit', (e) => {
-    e.preventDefault(); //Con esto se evita el comportamiento default del form
+    e.preventDefault(); //Con esto se evita el comportamiento default del form (sobretodo que no se recargue la página)
 
     const email = document.getElementById('email').value;
     const fullname = document.getElementById('fullname').value;
