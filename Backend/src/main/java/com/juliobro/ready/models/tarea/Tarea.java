@@ -1,5 +1,6 @@
 package com.juliobro.ready.models.tarea;
 
+import com.juliobro.ready.models.tarea.dto.ActualizarTareaDTO;
 import com.juliobro.ready.models.tarea.dto.RegistroTareaDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,5 +35,20 @@ public class Tarea {
         this.fechaCreacion = LocalDateTime.now();
         this.fechaLimite = datos.fechaLimite();
         this.estado = Estado.PENDIENTE;
+    }
+
+    public void actualizarDatos(ActualizarTareaDTO datos) {
+        this.titulo = datos.titulo() != null
+                ? datos.titulo()
+                : this.titulo;
+        this.descripcion = datos.descripcion() != null
+                ? datos.descripcion()
+                : this.descripcion;
+        this.fechaLimite = datos.fechaLimite() != null
+                ? datos.fechaLimite()
+                : this.fechaLimite;
+        this.estado = datos.estado() != null
+                ? datos.estado()
+                : this.estado;
     }
 }

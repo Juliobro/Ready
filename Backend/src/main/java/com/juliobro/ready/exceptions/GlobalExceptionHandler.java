@@ -2,6 +2,7 @@ package com.juliobro.ready.exceptions;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,9 +47,15 @@ public class GlobalExceptionHandler {
             }
         }
 
+        if (e.getCause() instanceof ValueInstantiationException valueInstantiationException) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(valueInstantiationException.getCause().toString());
+        }
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body("Error: El formato del cuerpo de la solicitud es incorrecto.");
+                .body("El formato del cuerpo de la solicitud es incorrecto. Error:\n" + e.getMessage());
     }
 
     //Este handler es para tratar errores a la hora de haber estructurado el JSON como tal
