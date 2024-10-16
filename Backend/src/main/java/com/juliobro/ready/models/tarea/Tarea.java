@@ -2,6 +2,7 @@ package com.juliobro.ready.models.tarea;
 
 import com.juliobro.ready.models.tarea.dto.ActualizarTareaDTO;
 import com.juliobro.ready.models.tarea.dto.RegistroTareaDTO;
+import com.juliobro.ready.models.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -28,6 +29,10 @@ public class Tarea {
     private String descripcion;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaLimite;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
 
     public Tarea(RegistroTareaDTO datos) {
         this.titulo = datos.titulo();
