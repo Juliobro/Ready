@@ -1,3 +1,1 @@
-## Ready
-
-Etapas iniciales y front-end de la aplicación web Ready
+## Ready is Cookin'...
