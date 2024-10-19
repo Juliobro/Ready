@@ -34,6 +34,8 @@ public class Tarea {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
+    /* ------------------------------ Métodos ------------------------------ */
+
     public Tarea(RegistroTareaDTO datos) {
         this.titulo = datos.titulo();
         this.descripcion = datos.descripcion();

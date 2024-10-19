@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.ValueInstantiationException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -64,6 +65,12 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .badRequest()
                 .body("Error: JSON mal formado o estructura no válida.");
+    }
+
+    //Este handler es para dar información de errores a la hora de validar reglas de negocio
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<String> tratarValidacionesDeNegocio(ValidationException e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     public record ValidacionErroresDTO(String campo, String error) {
