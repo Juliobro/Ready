@@ -1,11 +1,12 @@
 package com.juliobro.ready.controllers;
 
-import com.juliobro.ready.models.tarea.dto.ActualizarTareaDTO;
-import com.juliobro.ready.models.tarea.dto.DetallesTareaDTO;
-import com.juliobro.ready.models.tarea.dto.ListadoTareasDTO;
-import com.juliobro.ready.models.tarea.dto.RegistroTareaDTO;
-import com.juliobro.ready.models.tarea.Estado;
-import com.juliobro.ready.services.TareaService;
+import com.juliobro.ready.infra.controllers.TareaController;
+import com.juliobro.ready.domain.models.tarea.dto.ActualizarTareaDTO;
+import com.juliobro.ready.domain.models.tarea.dto.DetallesTareaDTO;
+import com.juliobro.ready.domain.models.tarea.dto.ListadoTareasDTO;
+import com.juliobro.ready.domain.models.tarea.dto.RegistroTareaDTO;
+import com.juliobro.ready.domain.models.tarea.Estado;
+import com.juliobro.ready.domain.services.TareaService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

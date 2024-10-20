@@ -1,6 +1,7 @@
 package com.juliobro.ready.exceptions;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.juliobro.ready.infra.exceptions.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
