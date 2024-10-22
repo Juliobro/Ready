@@ -1,5 +1,6 @@
 package com.juliobro.ready.controllers;
 
+import com.juliobro.ready.domain.models.usuario.Usuario;
 import com.juliobro.ready.infra.controllers.TareaController;
 import com.juliobro.ready.domain.models.tarea.dto.ActualizarTareaDTO;
 import com.juliobro.ready.domain.models.tarea.dto.DetallesTareaDTO;
@@ -16,13 +17,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 class TareaControllerTest {
@@ -42,21 +47,30 @@ class TareaControllerTest {
     void crearTarea_DeberiaCrearTareaYRetornarDetalles() {
         // -- Given
         RegistroTareaDTO registroTareaDTO = new RegistroTareaDTO("Título de tarea", "Descripción de tarea",
-                LocalDateTime.now().plusDays(1)); //Fecha límite futura
-        DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(1L, "Título de tarea", "Descripción de tarea",
+                LocalDateTime.now().plusDays(1)); // Fecha límite futura
+
+        Long usuarioIdSimulado = 1L; // Simular el ID generado
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+
+        DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(usuarioIdSimulado, "Título de tarea", "Descripción de tarea",
                 LocalDateTime.now(), LocalDateTime.now().plusDays(1), Estado.PENDIENTE);
+
         UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance();
 
-
         // -- When
-        when(tareaService.crearTarea(any(RegistroTareaDTO.class))).thenReturn(detallesTareaDTO);
-        ResponseEntity<DetallesTareaDTO> response = tareaController.crearTarea(registroTareaDTO, uriComponentsBuilder);
+        when(tareaService.crearTarea(any(RegistroTareaDTO.class), any(Usuario.class))).thenReturn(detallesTareaDTO);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
+
+        ResponseEntity<DetallesTareaDTO> response = tareaController.crearTarea(registroTareaDTO, uriComponentsBuilder, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(201);
         assertThat(response.getBody()).isEqualTo(detallesTareaDTO);
-        verify(tareaService).crearTarea(any(RegistroTareaDTO.class));
-        verify(tareaService, times(1)).crearTarea(registroTareaDTO);
+        verify(tareaService).crearTarea(any(RegistroTareaDTO.class), eq(usuarioMock));
     }
 
     @Test
@@ -64,15 +78,25 @@ class TareaControllerTest {
         // -- Given
         Pageable pageable = Pageable.unpaged();
         Page<ListadoTareasDTO> page = new PageImpl<>(Collections.emptyList());
-        when(tareaService.listarTareas(pageable)).thenReturn(page);
+
+        // Simulando el usuario autenticado
+        Long usuarioIdSimulado = 1L;
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+
+        when(tareaService.listarTareasPorUsuario(eq(usuarioMock), eq(pageable))).thenReturn(page);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
 
         // -- When
-        ResponseEntity<Page<ListadoTareasDTO>> response = tareaController.listarTareas(pageable);
+        ResponseEntity<Page<ListadoTareasDTO>> response = tareaController.listarTareas(pageable, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(page);
-        verify(tareaService).listarTareas(pageable);
+        verify(tareaService).listarTareasPorUsuario(eq(usuarioMock), eq(pageable));
     }
 
     @Test
@@ -83,43 +107,67 @@ class TareaControllerTest {
         DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(1L, "Título actualizado",
                 "Descripción actualizada", LocalDateTime.now(), LocalDateTime.now().plusDays(1), Estado.EN_PROCESO);
 
-        when(tareaService.actualizarTarea(any(ActualizarTareaDTO.class))).thenReturn(detallesTareaDTO);
+        Long usuarioIdSimulado = 1L;
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+
+        when(tareaService.actualizarTarea(any(ActualizarTareaDTO.class), eq(usuarioMock))).thenReturn(detallesTareaDTO);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
 
         // -- When
-        ResponseEntity<DetallesTareaDTO> response = tareaController.actualizarTarea(actualizarTareaDTO);
+        ResponseEntity<DetallesTareaDTO> response = tareaController.actualizarTarea(actualizarTareaDTO, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(detallesTareaDTO);
-        verify(tareaService).actualizarTarea(actualizarTareaDTO);
+        verify(tareaService).actualizarTarea(actualizarTareaDTO, usuarioMock);
     }
 
     @Test
     void eliminarTarea_DeberiaEliminarTareaYRetornarNoContent() {
         // -- Given
         Long tareaId = 1L;
-        when(tareaService.eliminarTarea(tareaId)).thenReturn(true);
+        Long usuarioIdSimulado = 1L;
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+
+        when(tareaService.eliminarTarea(eq(tareaId), eq(usuarioMock))).thenReturn(true);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
 
         // -- When
-        ResponseEntity<Void> response = tareaController.eliminarTarea(tareaId);
+        ResponseEntity<Void> response = tareaController.eliminarTarea(tareaId, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(204);
-        verify(tareaService).eliminarTarea(tareaId);
+        verify(tareaService).eliminarTarea(tareaId, usuarioMock);
     }
 
     @Test
     void eliminarTarea_DeberiaRetornarNotFoundCuandoNoSeEncuentraTarea() {
         // -- Given
         Long tareaId = 1L;
-        when(tareaService.eliminarTarea(tareaId)).thenReturn(false);
+        Long usuarioIdSimulado = 1L;
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+
+        when(tareaService.eliminarTarea(eq(tareaId), eq(usuarioMock))).thenReturn(false);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
 
         // -- When
-        ResponseEntity<Void> response = tareaController.eliminarTarea(tareaId);
+        ResponseEntity<Void> response = tareaController.eliminarTarea(tareaId, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(404);
-        verify(tareaService).eliminarTarea(tareaId);
+        verify(tareaService).eliminarTarea(tareaId, usuarioMock);
     }
 
     @Test
@@ -128,14 +176,22 @@ class TareaControllerTest {
         Long tareaId = 1L;
         DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(1L, "Título de tarea",
                 "Descripción de tarea", LocalDateTime.now(), LocalDateTime.now().plusDays(1), Estado.PENDIENTE);
-        when(tareaService.mostrarTarea(tareaId)).thenReturn(detallesTareaDTO);
+
+        Long usuarioIdSimulado = 1L;
+        Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
+        when(tareaService.mostrarTarea(eq(tareaId), eq(usuarioMock))).thenReturn(detallesTareaDTO);
+
+        // Simular que el usuario fue autenticado y está disponible
+        SecurityContextHolder.getContext().setAuthentication(
+                new UsernamePasswordAuthenticationToken(usuarioMock, null, usuarioMock.getAuthorities())
+        );
 
         // -- When
-        ResponseEntity<DetallesTareaDTO> response = tareaController.mostrarTarea(tareaId);
+        ResponseEntity<DetallesTareaDTO> response = tareaController.mostrarTarea(tareaId, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(detallesTareaDTO);
-        verify(tareaService).mostrarTarea(tareaId);
+        verify(tareaService).mostrarTarea(tareaId, usuarioMock);
     }
 }

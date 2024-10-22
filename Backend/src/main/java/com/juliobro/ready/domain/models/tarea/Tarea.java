@@ -4,10 +4,7 @@ import com.juliobro.ready.domain.models.tarea.dto.ActualizarTareaDTO;
 import com.juliobro.ready.domain.models.tarea.dto.RegistroTareaDTO;
 import com.juliobro.ready.domain.models.usuario.Usuario;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +27,7 @@ public class Tarea {
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaLimite;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
