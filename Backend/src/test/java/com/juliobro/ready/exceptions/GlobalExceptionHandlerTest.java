@@ -51,7 +51,7 @@ class GlobalExceptionHandlerTest {
         HttpMessageNotReadableException httpException = new HttpMessageNotReadableException("error", exception);
 
         // -- When
-        ResponseEntity<String> response = exceptionHandler.handleHttpMessageNotReadable(httpException);
+        ResponseEntity<String> response = exceptionHandler.tratarHttpMessageNotReadable(httpException);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(400);

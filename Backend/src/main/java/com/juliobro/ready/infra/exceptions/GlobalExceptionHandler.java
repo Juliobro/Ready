@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 
     //Este handler es para tratar los errores en cuanto al formato de los datos ingresados
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
+    public ResponseEntity<String> tratarHttpMessageNotReadable(HttpMessageNotReadableException e) {
 
         if (e.getCause() instanceof InvalidFormatException invalidFormatException) {
             Throwable causaRaiz = invalidFormatException.getCause();
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
 
     //Este handler es para tratar errores a la hora de haber estructurado el JSON como tal
     @ExceptionHandler(JsonMappingException.class)
-    public ResponseEntity<String> handleJsonMappingException() {
+    public ResponseEntity<String> tratarJsonMappingException() {
         return ResponseEntity
                 .badRequest()
                 .body("Error: JSON mal formado o estructura no válida.");
