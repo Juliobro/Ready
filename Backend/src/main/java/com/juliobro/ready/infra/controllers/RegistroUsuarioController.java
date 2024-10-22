@@ -12,17 +12,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/signup")
+public class RegistroUsuarioController {
 
     private final UsuarioService usuarioService;
 
-    public AuthController(UsuarioService usuarioService) {
+    public RegistroUsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 
 
-    @PostMapping("/registro")
+    @PostMapping
     @Transactional
     public ResponseEntity<String> registrarUsuario(@RequestBody @Valid RegistroUsuarioDTO datosRegistro){
         Usuario nuevoUsuario = usuarioService.registrarUsuario(datosRegistro);
