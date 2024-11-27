@@ -40,7 +40,7 @@ public class TareaController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<ListadoTareasDTO>> listarTareas(@PageableDefault(size = 3) Pageable paginacion,
+    public ResponseEntity<Page<ListadoTareasDTO>> listarTareas(@PageableDefault(size = 15) Pageable paginacion,
                                                                @AuthenticationPrincipal Usuario usuario) {
         return ResponseEntity.ok(tareaService.listarTareasPorUsuario(usuario, paginacion));
     }
