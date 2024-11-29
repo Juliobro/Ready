@@ -102,15 +102,18 @@ class TareaControllerTest {
     @Test
     void actualizarTarea_DeberiaActualizarTareaYRetornarDetalles() {
         // -- Given
-        ActualizarTareaDTO actualizarTareaDTO = new ActualizarTareaDTO(1L, "Título actualizado",
+        Long idTarea = 1L; // El ID de la tarea
+        ActualizarTareaDTO actualizarTareaDTO = new ActualizarTareaDTO("Título actualizado",
                 "Descripción actualizada", LocalDateTime.now().plusDays(1), Estado.EN_PROCESO);
-        DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(1L, "Título actualizado",
+        DetallesTareaDTO detallesTareaDTO = new DetallesTareaDTO(idTarea, "Título actualizado",
                 "Descripción actualizada", LocalDateTime.now(), LocalDateTime.now().plusDays(1), Estado.EN_PROCESO);
 
         Long usuarioIdSimulado = 1L;
         Usuario usuarioMock = new Usuario(usuarioIdSimulado, List.of(), "test@example.com", "testuser", "password");
 
-        when(tareaService.actualizarTarea(any(ActualizarTareaDTO.class), eq(usuarioMock))).thenReturn(detallesTareaDTO);
+        // Simulamos la respuesta del servicio
+        when(tareaService.actualizarTarea(eq(idTarea), any(ActualizarTareaDTO.class), eq(usuarioMock)))
+                .thenReturn(detallesTareaDTO);
 
         // Simular que el usuario fue autenticado y está disponible
         SecurityContextHolder.getContext().setAuthentication(
@@ -118,12 +121,12 @@ class TareaControllerTest {
         );
 
         // -- When
-        ResponseEntity<DetallesTareaDTO> response = tareaController.actualizarTarea(actualizarTareaDTO, usuarioMock);
+        ResponseEntity<DetallesTareaDTO> response = tareaController.actualizarTarea(actualizarTareaDTO, idTarea, usuarioMock);
 
         // -- Then
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
         assertThat(response.getBody()).isEqualTo(detallesTareaDTO);
-        verify(tareaService).actualizarTarea(actualizarTareaDTO, usuarioMock);
+        verify(tareaService).actualizarTarea(eq(idTarea), any(ActualizarTareaDTO.class), eq(usuarioMock));
     }
 
     @Test

@@ -1,30 +1,46 @@
-const loginForm = document.getElementById('login-form');
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("login-form");
 
-loginForm.addEventListener('submit', (e) => {
-    e.preventDefault(); //Con esto se evita el comportamiento default del form (sobretodo que no se recargue la página)
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    const email = document.getElementById('email').value.toLowerCase(); //Se convierte a minúsculas para comparación
-    const password = document.getElementById('password').value;
+        const login = document.getElementById("login").value;
+        const password = document.getElementById("password").value;
 
-    //Se obtienen los usuarios guardados en el Local Storage
-    let users = JSON.parse(localStorage.getItem('users')) || {};
+        try {
+            const response = await fetch("http://localhost:8080/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ login, password }),
+            });
 
-    //Aquí se verificará si el correo y la contraseña coinciden
-    let userFound = false;
-    let userName = '';
+            if (response.status === 403) {
+                throw new Error("Credenciales incorrectas");
+            }
 
-    for (let id in users) {
-        if (users[id].email.toLowerCase() === email && users[id].password === password) {
-            userFound = true;
-            userName = users[id].username;
-            break;
+            if (!response.ok) {
+                throw new Error("Error en el servidor. Inténtalo más tarde.");
+            }
+
+            const data = await response.json();
+            const token = data.jwt;
+
+            if (!token) {
+                throw new Error("Token no recibido. Contacta con soporte.");
+            }
+
+            localStorage.setItem("authToken", token);
+
+            showNotification("Inicio de sesión exitoso. Redirigiendo...", "success");
+
+            setTimeout(() => {
+                window.location.href = "dashboard.html";
+            }, 2000);
+        } catch (error) {
+            console.error("Error al iniciar sesión:", error.message);
+            showNotification("Error: " + error.message, "error");
         }
-    }
-
-    if (userFound) {
-        alert(`Has iniciado sesión correctamente. ¡Bienvenido de nuevo ${userName}!`);
-        window.location.href = 'dashboard.html'; //(Esto por ahora va a estar comentado, lo implementaré en el futuro)
-    } else {
-        alert('Correo o contraseña incorrectos. Por favor, intenta de nuevo.');
-    }
+    });
 });

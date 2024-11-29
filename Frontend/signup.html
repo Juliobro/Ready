@@ -6,8 +6,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/auth-cards-style.css">
+    <link rel="stylesheet" href="css/notification-style.css">
     <link rel="icon" href="img/ready-logo.png">
     <title>Ready | Registro</title>
 </head>
@@ -20,14 +22,13 @@
                 <h1><span>R</span>eady</h1>
             </header>
 
+            <div id="notification-container" class="notification-container"></div>
+
             <form id="signup-form" class="card__form signup">
                 <h2>¡Bienvenido a Ready!</h2>
 
                 <label for="email">Email</label>
                 <input type="email" id="email" placeholder="Correo" required>
-                
-                <label for="fullname">Nombre y apellidos</label>
-                <input type="text" id="fullname" placeholder="Puede ser un nombre y un apellido" required>
 
                 <label for="username">Nombre de usuario</label>
                 <input type="text" id="username" placeholder="Tu nombre de usuario" required>
@@ -48,6 +49,7 @@
             </form>
         </section>
     </main>
+    <script src="js/show-notification.js"></script>
     <script src="js/user-register.js"></script>
 </body>
 </html>

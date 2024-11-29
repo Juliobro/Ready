@@ -3,11 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../img/ready-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/dashboard-style.css">
+    <link rel="stylesheet" href="css/notification-style.css">
+    <link rel="icon" href="img/ready-logo.png">
     <title>Ready | Dashboard</title>
 </head>
 <body>
-    <p>La verdad es que todavía no tengo claro cómo será la interfaz visual de esta sección en su versión de escritorio pero gracias por acceder. Aún está en construcción :/</p>
-    <a href="index.html">Volver al Home</a>
+    <script src="js/auth-check.js"></script>
+    <header>
+        <div class="logo">
+            <h1><a href="https://github.com/Juliobro/Ready" target="_blank"><span>R</span>eady</a></h1>
+        </div>
+        <nav class="navbar">
+            <a href="#">Perfil</a>
+            <a href="index.html">Inicio</a>
+            <a href="javascript:void(0)" onclick="cerrarSesion()">Cerrar Sesión</a>
+        </nav>
+    </header>
+    <main>
+        <section class="task-list">
+            <div id="notification-container" class="notification-container"></div>
+            <div class="task-header">
+                <h2>Tus Tareas</h2>
+                <button id="nuevaTareaBtn" class="task-header__new-task-btn">Nueva tarea</button>
+            </div>
+            <table class="task-table">
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha de Terminación</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tareasBody">
+                    <!-- Las tareas se cargan dinámicamente con JavaScript -->
+                </tbody>
+            </table>
+            <div id="noTareas" class="no-tasks" style="display: none;">
+                <p>No hay tareas para mostrar.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p><a href="https://github.com/Juliobro/Ready" target="_blank">© 2024 Ready - Juliobro</a></p>
+    </footer>
+    <script src="js/show-notification.js"></script>
+    <script src="js/load-tasks.js"></script>
 </body>
 </html>

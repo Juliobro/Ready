@@ -131,7 +131,7 @@ input[type="email"], input[type="password"], input[type="text"] {
 
 /* ---------------------- Estilos específicos para el Sign up ---------------------- */
 body.signup {
-    height: 120vh;
+    height: 105vh;
 }
 
 .card__form.signup .card__privacy {

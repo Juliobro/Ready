@@ -1,0 +1,200 @@
+:root {
+    --primary-color: #050038;
+    --secondary-color: #ff6575;
+    --grey: #e6e6e6;
+    --white: #fff;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: var(--grey);
+    color: var(--primary-color);
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo h1 {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 0;
+    cursor: pointer;
+}
+
+.logo h1 a {
+    text-decoration: none;
+    color: var(--white);
+}
+
+.logo h1 span {
+    font-family: 'Fredoka', sans-serif;
+    font-size: 54px;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.navbar a {
+    color: var(--white);
+    text-decoration: none;
+    margin-left: 20px;
+    transition: all ease 350ms;
+}
+
+.navbar a:hover {
+    color: var(--secondary-color);
+}
+
+/* Tabla de Tareas */
+.task-list {
+    width: 100vw;
+}
+
+.task-header {
+    text-align: center;
+    padding-top: 20px;
+    position: relative;
+}
+
+.task-header__new-task-btn {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    position: absolute;
+    top: 35%;
+    right: 30px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.task-table {
+    width: 97%;
+    margin: 20px;
+    border-collapse: collapse;
+}
+
+.task-table th, .task-table td {
+    padding: 12px 15px;
+    border: 1px solid var(--grey);
+    text-align: left;
+}
+
+.task-table th {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.task-table tbody tr:nth-child(even) {
+    background-color: var(--grey);
+}
+
+.task-table tbody tr:hover {
+    outline: 1px solid var(--primary-color);
+    cursor: pointer;
+}
+
+.btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 0.875rem;
+}
+
+.btn-success {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: var(--white);
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: var(--white);
+}
+
+.no-tasks {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--primary-color);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background-color: var(--grey);
+}
+
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+ /* -------------------------------------------------------------------- */
+
+/* Formulario de Tarea */
+.task-form {
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 10px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.form-control, .form-select, textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--grey);
+    border-radius: 4px;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+}
+
+.form-control:focus, .form-select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

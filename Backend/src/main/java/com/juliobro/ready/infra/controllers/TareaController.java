@@ -45,11 +45,12 @@ public class TareaController {
         return ResponseEntity.ok(tareaService.listarTareasPorUsuario(usuario, paginacion));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DetallesTareaDTO> actualizarTarea(@RequestBody @Valid ActualizarTareaDTO datosTarea,
+                                                            @PathVariable Long id,
                                                             @AuthenticationPrincipal Usuario usuario) {
-        DetallesTareaDTO tareaActualizada = tareaService.actualizarTarea(datosTarea, usuario);
+        DetallesTareaDTO tareaActualizada = tareaService.actualizarTarea(id, datosTarea, usuario);
         return ResponseEntity.ok(tareaActualizada);
     }
 

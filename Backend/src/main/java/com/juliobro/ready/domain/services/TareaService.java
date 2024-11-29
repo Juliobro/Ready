@@ -35,8 +35,8 @@ public class TareaService {
     }
 
 
-    public DetallesTareaDTO actualizarTarea(ActualizarTareaDTO datosTarea, Usuario usuario) {
-        Tarea tarea = tareaRepository.getReferenceById(datosTarea.id());
+    public DetallesTareaDTO actualizarTarea(Long id, ActualizarTareaDTO datosTarea, Usuario usuario) {
+        Tarea tarea = tareaRepository.getReferenceById(id);
         if (!tarea.getUsuario().getId().equals(usuario.getId())) {
             throw new AccessDeniedException("No tienes permiso para actualizar esta tarea");
         }
