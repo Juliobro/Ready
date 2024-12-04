@@ -179,6 +179,12 @@ footer a {
     font-weight: 600;
 }
 
+#descripcion {
+    resize: vertical;
+    min-height: 50px;
+    max-height: 150px;
+}
+
 .form-control, .form-select, textarea {
     width: 100%;
     padding: 8px 12px;
