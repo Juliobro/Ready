@@ -59,10 +59,10 @@ async function cargarTareas(pagina = 0) {
                 <td>${formatearFecha(tarea.fechaLimite)}</td>
                 <td>${tarea.estado.charAt(0).toUpperCase() + tarea.estado.slice(1)}</td>
                 <td style="padding: 12px 10px;">
-                    <button class="btn btn-info btn-sm" onclick="editarTarea('${tarea.id}')">
+                    <button id="editarTareaBtn" class="btn btn-info btn-sm" onclick="editarTarea('${tarea.id}')">
                         <i class="fa fa-edit"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarTarea('${tarea.id}')">
+                    <button id="eliminarTareaBtn" class="btn btn-danger btn-sm" onclick="eliminarTarea('${tarea.id}')">
                         <i class="fa fa-trash"></i>
                     </button>
                 </td>
